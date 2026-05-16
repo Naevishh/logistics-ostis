@@ -9,6 +9,16 @@ subject_domain_of_logistics
 
 -> rrel_maximum_studied_object_class: 
 	logistics;;
+-> rrel_not_maximum_studied_object_class:
+	logistics_system;
+	logistics_function;
+	logistics_operation;
+	logistics_cost;
+	supply_chain;
+	warehouse;
+	cargo;
+	inventory;
+	logistics_flow;;
 
 logistics
 	<- sc_node_class;

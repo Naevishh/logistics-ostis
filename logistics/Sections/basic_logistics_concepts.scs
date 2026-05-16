@@ -1,0 +1,400 @@
+logistics_system
+    <- sc_node_class;
+    => nrel_main_idtf:
+        [логистическая система] (* <- lang_ru;; *);
+        [logistics system] (* <- lang_en;; *);
+
+    <- rrel_key_sc_element: ...
+    (*
+        <- definition;;
+        => nrel_main_idtf: 
+            [Опр. (логистическая система)]
+            (*<- lang_ru;;*);;
+        <= nrel_sc_text_translation:...
+        (*
+            -> rrel_example:
+                [<b>Логистическая система</b> — это совокупность элементов (поставщиков, складов, транспорта, потребителей), связанных логистическими процессами и объединённых единой целью управления материальными и информационными потоками.]
+                (*
+                    <- lang_ru;;
+                    => nrel_format: format_html;;
+                *);;
+        *);;
+    *);;
+
+logistics_function
+    <- sc_node_class;
+    => nrel_main_idtf:
+        [логистическая функция] (* <- lang_ru;; *);
+        [logistics function] (* <- lang_en;; *);
+
+    <- rrel_key_sc_element: ...
+    (*
+        <- definition;;
+        => nrel_main_idtf: 
+            [Опр. (логистическая функция)]
+            (*<- lang_ru;;*);;
+        <= nrel_sc_text_translation:...
+        (*
+            -> rrel_example:
+                [<b>Логистическая функция</b> — это укрупнённая совокупность логистических операций, направленная на реализацию целей логистической системы.]
+                (*
+                    <- lang_ru;;
+                    => nrel_format: format_html;;
+                *);;
+        *);;
+    *);;
+
+transportation_function <- sc_node_class;
+    => nrel_main_idtf:
+        [транспортировка] (* <- lang_ru;; *);
+        [transportation] (* <- lang_en;; *);
+    <= nrel_inclusion: logistics_function;;
+
+warehousing_function <- sc_node_class;
+    => nrel_main_idtf:
+        [складирование] (* <- lang_ru;; *);
+        [warehousing] (* <- lang_en;; *);
+    <= nrel_inclusion: logistics_function;;
+
+inventory_management_function <- sc_node_class;
+    => nrel_main_idtf:
+        [управление запасами] (* <- lang_ru;; *);
+        [inventory management] (* <- lang_en;; *);
+    <= nrel_inclusion: logistics_function;;
+
+order_management_function <- sc_node_class;
+    => nrel_main_idtf:
+        [управление заказами] (* <- lang_ru;; *);
+        [order management] (* <- lang_en;; *);
+    <= nrel_inclusion: logistics_function;;
+
+information_support_function <- sc_node_class;
+    => nrel_main_idtf:
+        [информационная поддержка] (* <- lang_ru;; *);
+        [information support] (* <- lang_en;; *);
+    <= nrel_inclusion: logistics_function;;
+
+logistics_operation
+    <- sc_node_class;
+    => nrel_main_idtf:
+        [логистическая операция] (* <- lang_ru;; *);
+        [logistics operation] (* <- lang_en;; *);
+
+    <- rrel_key_sc_element: ...
+    (*
+        <- definition;;
+        => nrel_main_idtf: 
+            [Опр. (логистическая операция)]
+            (*<- lang_ru;;*);;
+        <= nrel_sc_text_translation:...
+        (*
+            -> rrel_example:
+                [<b>Логистическая операция</b> — это элементарное действие, направленное на преобразование материального или информационного потока. Примеры: погрузка, разгрузка, комплектация, маркировка.]
+                (*
+                    <- lang_ru;;
+                    => nrel_format: format_html;;
+                *);;
+        *);;
+    *);;
+
+nrel_consists_of_operations <- sc_node_non_role_relation;
+    => nrel_main_idtf:
+        [состоит из операций*] (* <- lang_ru;; *);
+        [consists of operations*] (* <- lang_en;; *);
+    <- binary_relation;
+    <- oriented_relation;
+    => nrel_first_domain: logistical_process;
+    => nrel_second_domain: logistics_operation;;
+
+supply_chain
+    <- sc_node_class;
+    => nrel_main_idtf:
+        [цепь поставок] (* <- lang_ru;; *);
+        [supply chain] (* <- lang_en;; *);
+    => nrel_idtf:
+        [логистическая цепь] (* <- lang_ru;; *);
+        [logistics chain] (* <- lang_en;; *);
+
+    <- rrel_key_sc_element: ...
+    (*
+        <- definition;;
+        => nrel_main_idtf: 
+            [Опр. (цепь поставок)]
+            (*<- lang_ru;;*);;
+        <= nrel_sc_text_translation:...
+        (*
+            -> rrel_example:
+                [<b>Цепь поставок</b> — это последовательность звеньев (поставщик, производитель, дистрибьютор, розничный продавец, потребитель), через которые товар проходит от источника сырья до конечного потребителя.]
+                (*
+                    <- lang_ru;;
+                    => nrel_format: format_html;;
+                *);;
+        *);;
+    *);;
+
+supply_chain_link <- sc_node_class;
+    => nrel_main_idtf:
+        [звено цепи поставок] (* <- lang_ru;; *);
+        [supply chain link] (* <- lang_en;; *);
+    <= nrel_inclusion: supply_chain;;
+
+nrel_previous_link <- sc_node_role_relation;
+    => nrel_main_idtf:
+        [предыдущее звено'] (* <- lang_ru;; *);
+        [previous link'] (* <- lang_en;; *);
+    <- binary_relation;
+    => nrel_first_domain: supply_chain_link;
+    => nrel_second_domain: supply_chain_link;;
+
+nrel_next_link <- sc_node_role_relation;
+    => nrel_main_idtf:
+        [следующее звено'] (* <- lang_ru;; *);
+        [next link'] (* <- lang_en;; *);
+    <- binary_relation;
+    => nrel_first_domain: supply_chain_link;
+    => nrel_second_domain: supply_chain_link;;
+
+logistics_cost
+    <- sc_node_class;
+    => nrel_main_idtf:
+        [логистические издержки] (* <- lang_ru;; *);
+        [logistics cost] (* <- lang_en;; *);
+
+    <- rrel_key_sc_element: ...
+    (*
+        <- definition;;
+        => nrel_main_idtf: 
+            [Опр. (логистические издержки)]
+            (*<- lang_ru;;*);;
+        <= nrel_sc_text_translation:...
+        (*
+            -> rrel_example:
+                [<b>Логистические издержки</b> — это суммарные затраты, связанные с выполнением логистических операций: транспортные расходы, складские расходы, расходы на управление запасами и т.д.]
+                (*
+                    <- lang_ru;;
+                    => nrel_format: format_html;;
+                *);;
+        *);;
+    *);;
+
+transportation_cost <- sc_node_class;
+    => nrel_main_idtf:
+        [транспортные расходы] (* <- lang_ru;; *);
+        [transportation cost] (* <- lang_en;; *);
+    <= nrel_inclusion: logistics_cost;;
+
+warehousing_cost <- sc_node_class;
+    => nrel_main_idtf:
+        [складские расходы] (* <- lang_ru;; *);
+        [warehousing cost] (* <- lang_en;; *);
+    <= nrel_inclusion: logistics_cost;;
+
+inventory_holding_cost <- sc_node_class;
+    => nrel_main_idtf:
+        [затраты на хранение запасов] (* <- lang_ru;; *);
+        [inventory holding cost] (* <- lang_en;; *);
+    <= nrel_inclusion: logistics_cost;;
+
+administration_cost <- sc_node_class;
+    => nrel_main_idtf:
+        [административные расходы] (* <- lang_ru;; *);
+        [administration cost] (* <- lang_en;; *);
+    <= nrel_inclusion: logistics_cost;;
+
+warehouse
+    <- sc_node_class;
+    => nrel_main_idtf:
+        [склад] (* <- lang_ru;; *);
+        [warehouse] (* <- lang_en;; *);
+
+    <- rrel_key_sc_element: ...
+    (*
+        <- definition;;
+        => nrel_main_idtf: 
+            [Опр. (склад)]
+            (*<- lang_ru;;*);;
+        <= nrel_sc_text_translation:...
+        (*
+            -> rrel_example:
+                [<b>Склад</b> — это здание, сооружение или территория, предназначенная для приёма, хранения и отгрузки товаров.]
+                (*
+                    <- lang_ru;;
+                    => nrel_format: format_html;;
+                *);;
+        *);;
+    *);;
+
+distribution_center <- sc_node_class;
+    => nrel_main_idtf:
+        [распределительный центр] (* <- lang_ru;; *);
+        [distribution center] (* <- lang_en;; *);
+    <= nrel_inclusion: warehouse;;
+
+transshipment_warehouse <- sc_node_class;
+    => nrel_main_idtf:
+        [перевалочный склад] (* <- lang_ru;; *);
+        [transshipment warehouse] (* <- lang_en;; *);
+    <= nrel_inclusion: warehouse;;
+
+temporary_storage_warehouse <- sc_node_class;
+    => nrel_main_idtf:
+        [склад временного хранения] (* <- lang_ru;; *);
+        [temporary storage warehouse] (* <- lang_en;; *);
+    <= nrel_inclusion: warehouse;;
+
+nrel_warehouse_capacity <- sc_node_non_role_relation;
+    => nrel_main_idtf:
+        [вместимость склада*] (* <- lang_ru;; *);
+        [warehouse capacity*] (* <- lang_en;; *);
+    <- binary_relation;
+    => nrel_first_domain: warehouse;
+    => nrel_second_domain: number;;
+
+nrel_warehouse_area <- sc_node_non_role_relation;
+    => nrel_main_idtf:
+        [площадь склада*] (* <- lang_ru;; *);
+        [warehouse area*] (* <- lang_en;; *);
+    <- binary_relation;
+    => nrel_first_domain: warehouse;
+    => nrel_second_domain: number;;
+
+warehouse -> rrel_has_staff: storekeeper;;
+
+cargo
+    <- sc_node_class;
+    => nrel_main_idtf:
+        [груз] (* <- lang_ru;; *);
+        [cargo] (* <- lang_en;; *);
+    => nrel_idtf:
+        [freight] (* <- lang_en;; *);
+        [товар] (* <- lang_ru;; *);
+
+    <- rrel_key_sc_element: ...
+    (*
+        <- definition;;
+        => nrel_main_idtf: 
+            [Опр. (груз)]
+            (*<- lang_ru;;*);;
+        <= nrel_sc_text_translation:...
+        (*
+            -> rrel_example:
+                [<b>Груз</b> — это материальный объект, принятый к перевозке транспортной организацией.]
+                (*
+                    <- lang_ru;;
+                    => nrel_format: format_html;;
+                *);;
+        *);;
+    *);;
+
+nrel_volume <- sc_node_non_role_relation;
+    => nrel_main_idtf:
+        [объём*] (* <- lang_ru;; *);
+        [volume*] (* <- lang_en;; *);
+    <- binary_relation;
+    => nrel_first_domain: cargo;
+    => nrel_second_domain: number;;
+
+nrel_density <- sc_node_non_role_relation;
+    => nrel_main_idtf:
+        [плотность*] (* <- lang_ru;; *);
+        [density*] (* <- lang_en;; *);
+    <- binary_relation;
+    => nrel_first_domain: cargo;
+    => nrel_second_domain: number;;
+
+rrel_cubic_meter <- sc_node_role_relation;
+    => nrel_main_idtf:
+        [м³'] (* <- lang_ru;; *);
+        [m³'] (* <- lang_en;; *);
+    <- role_relation;;
+
+rrel_kg_per_cubic_meter <- sc_node_role_relation;
+    => nrel_main_idtf:
+        [кг/м³'] (* <- lang_ru;; *);
+        [kg/m³'] (* <- lang_en;; *);
+    <- role_relation;;
+
+inventory
+    <- sc_node_class;
+    => nrel_main_idtf:
+        [товарный запас] (* <- lang_ru;; *);
+        [inventory] (* <- lang_en;; *);
+    => nrel_idtf:
+        [stock] (* <- lang_en;; *);
+        [запас] (* <- lang_ru;; *);
+
+    <- rrel_key_sc_element: ...
+    (*
+        <- definition;;
+        => nrel_main_idtf: 
+            [Опр. (товарный запас)]
+            (*<- lang_ru;;*);;
+        <= nrel_sc_text_translation:...
+        (*
+            -> rrel_example:
+                [<b>Товарный запас</b> — это количество товаров, хранящихся на складе или в пути, обеспечивающее бесперебойное снабжение потребителей.]
+                (*
+                    <- lang_ru;;
+                    => nrel_format: format_html;;
+                *);;
+        *);;
+    *);;
+
+safety_stock <- sc_node_class;
+    => nrel_main_idtf:
+        [страховой запас] (* <- lang_ru;; *);
+        [safety stock] (* <- lang_en;; *);
+    <= nrel_inclusion: inventory;;
+
+seasonal_stock <- sc_node_class;
+    => nrel_main_idtf:
+        [сезонный запас] (* <- lang_ru;; *);
+        [seasonal stock] (* <- lang_en;; *);
+    <= nrel_inclusion: inventory;;
+
+transit_stock <- sc_node_class;
+    => nrel_main_idtf:
+        [запас в пути] (* <- lang_ru;; *);
+        [transit stock] (* <- lang_en;; *);
+    <= nrel_inclusion: inventory;;
+
+logistics_flow
+    <- sc_node_class;
+    => nrel_main_idtf:
+        [логистический поток] (* <- lang_ru;; *);
+        [logistics flow] (* <- lang_en;; *);
+
+    <- rrel_key_sc_element: ...
+    (*
+        <- definition;;
+        => nrel_main_idtf: 
+            [Опр. (логистический поток)]
+            (*<- lang_ru;;*);;
+        <= nrel_sc_text_translation:...
+        (*
+            -> rrel_example:
+                [<b>Логистический поток</b> — это направленное движение совокупности объектов (материальных, информационных, финансовых) в логистической системе.]
+                (*
+                    <- lang_ru;;
+                    => nrel_format: format_html;;
+                *);;
+        *);;
+    *);;
+
+material_flow <- sc_node_class;
+    => nrel_main_idtf:
+        [материальный поток] (* <- lang_ru;; *);
+        [material flow] (* <- lang_en;; *);
+    <= nrel_inclusion: logistics_flow;;
+
+information_flow <- sc_node_class;
+    => nrel_main_idtf:
+        [информационный поток] (* <- lang_ru;; *);
+        [information flow] (* <- lang_en;; *);
+    <= nrel_inclusion: logistics_flow;;
+
+financial_flow <- sc_node_class;
+    => nrel_main_idtf:
+        [финансовый поток] (* <- lang_ru;; *);
+        [financial flow] (* <- lang_en;; *);
+    <= nrel_inclusion: logistics_flow;;
